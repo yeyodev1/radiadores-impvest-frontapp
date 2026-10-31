@@ -1,0 +1,343 @@
+@use '../index' as *;
+
+// Panel de administración: sobrio, denso y cómodo en celular.
+.admin {
+  min-height: 100dvh;
+  background: $alu;
+
+  &__top {
+    @include flex(row, center, space-between, 1rem);
+    @include pad-x;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    height: 3.8rem;
+    background: $night;
+    color: $alu;
+
+    nav {
+      @include flex(row, center, flex-start, 0.2rem);
+      overflow-x: auto;
+
+      a {
+        padding: 0.5rem 0.8rem;
+        border-radius: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        white-space: nowrap;
+
+        &.router-link-exact-active,
+        &.is-active {
+          background: $night-3;
+          color: $sand;
+        }
+      }
+    }
+  }
+
+  &__brand {
+    @include flex(row, center, flex-start, 0.5rem);
+    font-weight: 800;
+    font-stretch: 120%;
+
+    img {
+      width: 2rem;
+    }
+  }
+
+  &__logout {
+    border: 0;
+    background: none;
+    color: $mist;
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  &__main {
+    @include pad-x;
+    padding-top: 1.6rem;
+    padding-bottom: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__title {
+    @include flex(row, center, space-between, 1rem);
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+
+    h1 {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      font-stretch: 112%;
+    }
+  }
+}
+
+.a-btn {
+  @include flex(row, center, center, 0.5rem);
+  padding: 0.7rem 1.1rem;
+  border: 0;
+  border-radius: 0.6rem;
+  background: $copper;
+  color: $night;
+  font-weight: 800;
+  cursor: pointer;
+
+  &--ghost {
+    border: 1px solid $alu-3;
+    background: #fff;
+    color: $ink;
+  }
+
+  &--danger {
+    background: rgba($danger, 0.12);
+    color: $danger;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.a-card {
+  padding: 1.2rem;
+  border: 1px solid $alu-2;
+  border-radius: 1rem;
+  background: #fff;
+}
+
+.a-stats {
+  @include flex-cards(150px, 0.8rem);
+  margin-bottom: 1.5rem;
+
+  .a-card {
+    @include flex(column, flex-start, flex-start, 0.2rem);
+  }
+
+  span {
+    @include eyebrow;
+    font-size: 0.66rem;
+    color: $ink-2;
+  }
+
+  strong {
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+}
+
+.a-filters {
+  @include flex(row, center, flex-start, 0.6rem);
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+
+  input,
+  select {
+    padding: 0.65rem 0.8rem;
+    border: 1px solid $alu-3;
+    border-radius: 0.6rem;
+    background: #fff;
+    font: inherit;
+  }
+
+  input {
+    flex: 1 1 14rem;
+  }
+}
+
+.a-list {
+  @include flex(column, stretch, flex-start, 0.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.a-row {
+  @include flex(row, center, flex-start, 0.9rem);
+  flex-wrap: wrap;
+  padding: 0.8rem;
+  border: 1px solid $alu-2;
+  border-radius: 0.8rem;
+  background: #fff;
+
+  img {
+    width: 4.5rem;
+    height: 3.2rem;
+    object-fit: contain;
+  }
+
+  &__main {
+    @include flex(column, flex-start, flex-start, 0.1rem);
+    flex: 1 1 12rem;
+    min-width: 0;
+
+    strong {
+      line-height: 1.2;
+    }
+
+    .mono {
+      font-size: 0.72rem;
+      color: $ink-2;
+    }
+  }
+
+  &__price {
+    @include mono(1rem);
+    font-weight: 600;
+  }
+
+  &__actions {
+    @include flex(row, center, flex-end, 0.4rem);
+  }
+}
+
+.a-badge {
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: $alu-2;
+  font-size: 0.72rem;
+  font-weight: 700;
+
+  &--on {
+    background: rgba($whatsapp, 0.14);
+    color: #146c3b;
+  }
+
+  &--warn {
+    background: rgba($copper, 0.16);
+    color: $copper-deep;
+  }
+
+  &--off {
+    background: rgba($danger, 0.12);
+    color: $danger;
+  }
+}
+
+.a-form {
+  @include flex(column, stretch, flex-start, 1rem);
+
+  &__row {
+    @include flex-cards(220px, 1rem);
+  }
+
+  &__field {
+    @include flex(column, stretch, flex-start, 0.3rem);
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      padding: 0.75rem 0.85rem;
+      border: 1px solid $alu-3;
+      border-radius: 0.6rem;
+      background: #fff;
+      font: inherit;
+
+      &:focus {
+        border-color: $copper;
+        outline: 0;
+      }
+    }
+
+    small {
+      color: $ink-2;
+    }
+  }
+
+  &__checks {
+    @include flex(row, center, flex-start, 1.4rem);
+    flex-wrap: wrap;
+
+    label {
+      @include flex(row, center, flex-start, 0.4rem);
+      font-weight: 600;
+    }
+  }
+
+  &__actions {
+    @include flex(row, center, flex-end, 0.6rem);
+    flex-wrap: wrap;
+  }
+}
+
+.uploader {
+  @include flex(row, stretch, flex-start, 0.6rem);
+  flex-wrap: wrap;
+
+  &__item {
+    position: relative;
+    width: 8rem;
+    padding: 0.4rem;
+    border: 1px solid $alu-2;
+    border-radius: 0.7rem;
+    background: $surface;
+
+    img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: contain;
+    }
+
+    button {
+      position: absolute;
+      top: 0.3rem;
+      right: 0.3rem;
+      width: 1.8rem;
+      height: 1.8rem;
+      border: 0;
+      border-radius: 50%;
+      background: $night;
+      color: $alu;
+      cursor: pointer;
+    }
+  }
+
+  &__drop {
+    @include flex(column, center, center, 0.3rem);
+    width: 8rem;
+    min-height: 7rem;
+    border: 2px dashed $alu-3;
+    border-radius: 0.7rem;
+    color: $ink-2;
+    font-size: 0.8rem;
+    text-align: center;
+    cursor: pointer;
+
+    input {
+      display: none;
+    }
+  }
+}
+
+.login {
+  @include flex(column, center, center);
+  min-height: 100dvh;
+  padding: 1.5rem;
+  background: $night;
+
+  form {
+    @include flex(column, stretch, flex-start, 0.9rem);
+    width: min(100%, 24rem);
+    padding: 2rem;
+    @include tab-corners(1.6rem);
+    background: $alu;
+  }
+
+  img {
+    width: 4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    font-stretch: 112%;
+  }
+}

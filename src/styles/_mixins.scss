@@ -1,0 +1,82 @@
+@use 'sass:map';
+@use 'colors' as *;
+
+$breakpoints: (
+  'sm': 480px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+);
+
+@mixin from($name) {
+  @media (min-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}
+
+@mixin until($name) {
+  @media (max-width: map.get($breakpoints, $name) - 1px) {
+    @content;
+  }
+}
+
+@mixin pad-x {
+  padding-inline: clamp(1.1rem, 4.5vw, 4.5rem);
+}
+
+@mixin flex($dir: row, $align: center, $justify: flex-start, $gap: 0) {
+  display: flex;
+  flex-direction: $dir;
+  align-items: $align;
+  justify-content: $justify;
+  @if $gap != 0 {
+    gap: $gap;
+  }
+}
+
+// "Grilla" de tarjetas con flex-wrap (sustituye a CSS Grid).
+@mixin flex-cards($basis: 280px, $gap: 1rem) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap;
+
+  > * {
+    flex: 1 1 $basis;
+    min-width: 0;
+  }
+}
+
+@mixin display($size) {
+  font-family: $font-display;
+  font-size: $size;
+  font-weight: 800;
+  font-stretch: 112%;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+@mixin mono($size: 0.75rem) {
+  font-family: $font-mono;
+  font-size: $size;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+@mixin eyebrow {
+  font-family: $font-mono;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+// Esquina "pestaña" de la marca: tres redondeadas, una casi recta.
+@mixin tab-corners($r: 1.6rem) {
+  border-radius: $r $r 0.4rem $r;
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

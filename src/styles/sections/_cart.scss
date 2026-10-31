@@ -1,0 +1,290 @@
+@use '../index' as *;
+
+.cart {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+
+  &.is-open {
+    pointer-events: auto;
+  }
+
+  &__scrim {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: rgba($night, 0.55);
+    opacity: 0;
+    transition: opacity 0.35s;
+    cursor: pointer;
+
+    .cart.is-open & {
+      opacity: 1;
+    }
+  }
+
+  &__panel {
+    @include flex(column, stretch, flex-start);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: min(100%, 28rem);
+    background: $alu;
+    transform: translateX(102%);
+    transition: transform 0.5s $ease;
+
+    .cart.is-open & {
+      transform: translateX(0);
+    }
+  }
+
+  &__head {
+    @include flex(row, center, space-between);
+    padding: 1.3rem 1.3rem 1rem;
+    border-bottom: 1px solid $alu-3;
+
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      font-stretch: 112%;
+    }
+  }
+
+  &__close,
+  &__back {
+    border: 0;
+    background: none;
+    @include mono(0.85rem);
+    cursor: pointer;
+  }
+
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.5rem 1.3rem 1rem;
+  }
+
+  &__empty {
+    @include flex(column, flex-start, flex-start, 1rem);
+    padding: 1.5rem 0;
+    color: $ink-2;
+
+    img {
+      width: 70%;
+      opacity: 0.85;
+    }
+  }
+
+  &__line {
+    @include flex(row, center, flex-start, 0.8rem);
+    flex-wrap: wrap;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid $alu-2;
+
+    img {
+      flex: 0 0 4.5rem;
+      width: 4.5rem;
+    }
+  }
+
+  &__info {
+    @include flex(column, flex-start, flex-start, 0.1rem);
+    flex: 1 1 8rem;
+    font-size: 0.85rem;
+
+    strong {
+      font-size: 0.95rem;
+      line-height: 1.15;
+    }
+
+    .mono {
+      font-size: 0.68rem;
+      color: $ink-2;
+    }
+  }
+
+  &__qty {
+    @include flex(row, center, flex-start, 0.2rem);
+
+    button {
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid $alu-3;
+      border-radius: 50%;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    output {
+      min-width: 1.6rem;
+      @include mono(0.95rem);
+      text-align: center;
+    }
+  }
+
+  &__remove {
+    margin-left: 5.3rem;
+    border: 0;
+    background: none;
+    color: $ink-2;
+    font-size: 0.78rem;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  &__foot {
+    @include flex(column, stretch, flex-start, 0.7rem);
+    padding: 1.2rem 1.3rem calc(1.2rem + env(safe-area-inset-bottom));
+    border-top: 1px solid $alu-3;
+    background: #fff;
+  }
+
+  &__total {
+    @include flex(row, baseline, space-between);
+
+    strong {
+      @include mono(1.6rem);
+    }
+  }
+
+  &__fine {
+    font-size: 0.8rem;
+    color: $ink-2;
+  }
+}
+
+// CTA confirmar: bloque oscuro que se llena de cobre.
+.checkout-btn {
+  @include flex(column, flex-start, flex-start, 0.1rem);
+  @include tab-corners(1rem);
+  position: relative;
+  width: 100%;
+  padding: 1rem 1.2rem;
+  overflow: hidden;
+  border: 0;
+  background: $night;
+  color: $alu;
+  text-align: left;
+  cursor: pointer;
+  isolation: isolate;
+  transition: color 0.3s;
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    content: '';
+    background: $copper;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.5s $ease;
+  }
+
+  &:hover:not(:disabled) {
+    color: $night;
+
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &__label {
+    font-size: 1.2rem;
+    font-weight: 800;
+  }
+
+  &__sub {
+    font-size: 0.82rem;
+  }
+}
+
+// Formulario de pedido (dentro del cajón)
+.checkout {
+  @include flex(column, stretch, flex-start, 0.9rem);
+  padding-top: 0.8rem;
+
+  &__group {
+    @include flex(column, stretch, flex-start, 0.3rem);
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.8rem 0.9rem;
+      border: 1px solid $alu-3;
+      border-radius: 0.7rem;
+      background: #fff;
+      color: $ink;
+      font: inherit;
+
+      &:focus {
+        border-color: $copper;
+        outline: 0;
+        box-shadow: 0 0 0 4px rgba($copper, 0.18);
+      }
+    }
+  }
+
+  &__toggle {
+    @include flex(row, stretch, flex-start, 0.4rem);
+
+    button {
+      flex: 1;
+      padding: 0.8rem;
+      border: 1px solid $alu-3;
+      border-radius: 0.7rem;
+      background: #fff;
+      font-weight: 700;
+      cursor: pointer;
+
+      &.is-active {
+        border-color: $night;
+        background: $night;
+        color: $alu;
+      }
+    }
+  }
+
+  &__error {
+    padding: 0.7rem 0.9rem;
+    border-radius: 0.6rem;
+    background: rgba($danger, 0.1);
+    color: $danger;
+    font-size: 0.88rem;
+  }
+}
+
+.order-done {
+  @include flex(column, flex-start, flex-start, 1rem);
+  padding: 1.5rem 0;
+
+  &__code {
+    padding: 0.4rem 0.7rem;
+    border-radius: 0.4rem;
+    background: $cap;
+    @include mono(1.1rem);
+  }
+
+  h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1.05;
+  }
+
+  p {
+    color: $ink-2;
+  }
+}

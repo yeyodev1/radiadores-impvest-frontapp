@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <title>Radiadores Impvest | Radiadores e intercoolers en Ecuador</title>
+    <meta name="description" content="Más de 1000 radiadores para autos, camiones y maquinaria. Entrega el mismo día o máximo 24 horas, envíos a todo Ecuador y 5 sucursales." />
+    <meta name="theme-color" content="#0a1820" />
+    <link rel="preload" as="image" href="/img/hero/core.webp" />
+
+    <!-- WhatsApp es el canal principal para compartir -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_EC" />
+    <meta property="og:site_name" content="Radiadores Impvest" />
+    <meta property="og:title" content="Radiadores Impvest" />
+    <meta property="og:description" content="Más de 1000 radiadores. Entrega hoy o en 24 h, envíos a todo Ecuador y 5 sucursales." />
+    <meta property="og:image" content="https://www.radiadoresimpvest.com/img/brand/og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+    <style>
+      html { background: #0a1820; }
+      #splash { position: fixed; inset: 0; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background: #0a1820; transition: opacity .5s, visibility .5s; }
+      #splash.is-leaving { opacity: 0; visibility: hidden; }
+      #splash img { width: 70px; animation: sp 1.6s ease-in-out infinite; }
+      #splash i { width: 110px; height: 2px; background: #1a3341; overflow: hidden; position: relative; }
+      #splash i::after { content: ''; position: absolute; inset: 0; background: #d27a2c; transform: translateX(-100%); animation: bar 1.2s cubic-bezier(.65,0,.35,1) infinite; }
+      @keyframes sp { 50% { transform: translateY(-4px); } }
+      @keyframes bar { to { transform: translateX(100%); } }
+      @media (prefers-reduced-motion: reduce) { #splash img, #splash i::after { animation: none; } }
+    </style>
+  </head>
+  <body>
+    <div id="splash" role="status" aria-live="polite"><img src="/img/brand/mark.webp" alt="" /><i></i></div>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

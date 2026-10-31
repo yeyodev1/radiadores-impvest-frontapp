@@ -1,0 +1,3 @@
+// Se inyecta en CADA <style lang="scss">: solo variables y mixins, nada que emita CSS.
+@forward 'colors';
+@forward 'mixins';

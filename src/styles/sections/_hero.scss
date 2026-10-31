@@ -1,0 +1,519 @@
+@use '../index' as *;
+
+// Hero "radiador abierto". Escenario sticky; GSAP mueve solo transform y clip-path.
+.hero {
+  --hero-p: 0;
+  position: relative;
+  height: 480dvh;
+  margin-top: -$header-h;
+  background: $night;
+  color: $alu;
+
+  @include from('md') {
+    height: 560dvh;
+  }
+
+  &__stage {
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    overflow: hidden;
+    perspective: 1400px;
+  }
+
+  &__glow {
+    position: absolute;
+    inset: -20%;
+    pointer-events: none;
+
+    &--hot {
+      opacity: 0.85;
+      background:
+        radial-gradient(40% 45% at 26% 58%, rgba($copper, 0.55), transparent 70%),
+        radial-gradient(30% 30% at 70% 30%, rgba($copper-deep, 0.3), transparent 70%);
+    }
+
+    &--cold {
+      opacity: 0.25;
+      background:
+        radial-gradient(45% 50% at 72% 50%, rgba($ice, 0.42), transparent 70%),
+        radial-gradient(35% 35% at 25% 25%, rgba(#4d86a3, 0.35), transparent 70%);
+    }
+  }
+
+  &__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba($alu, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba($alu, 0.05) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(70% 60% at 50% 55%, #000 30%, transparent 80%);
+  }
+
+  &__temp {
+    @include flex(column, flex-end, flex-start, 0.2rem);
+    position: absolute;
+    z-index: 4;
+    top: 5.3rem;
+    right: clamp(1.1rem, 4.5vw, 4.5rem);
+    font-family: $font-mono;
+
+    &-label {
+      @include eyebrow;
+      font-size: 0.64rem;
+      color: $mist;
+    }
+
+    &-value {
+      font-size: 1.9rem;
+      font-weight: 600;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      color: color-mix(in srgb, $copper clamp(0%, calc((1 - var(--hero-p) * 1.6) * 100%), 100%), $ice);
+
+      sup {
+        margin-left: 0.1em;
+        font-size: 0.42em;
+        vertical-align: 0.9em;
+      }
+
+      @include from('md') {
+        font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+      }
+    }
+
+    &-bar {
+      position: relative;
+      width: 4.5rem;
+      height: 3px;
+      background: $night-3;
+
+      i {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, $ice, $copper);
+        transform: scaleX(calc(1 - min(var(--hero-p) * 1.5, 0.75)));
+        transform-origin: left;
+      }
+
+      @include from('md') {
+        width: 7rem;
+      }
+    }
+  }
+
+  &__rig {
+    @include flex(row, flex-start, center);
+    position: absolute;
+    inset: 0;
+    padding-top: 21dvh;
+    transform-style: preserve-3d;
+
+    @include from('md') {
+      align-items: center;
+      padding-top: 0;
+    }
+  }
+
+  &__rad {
+    position: relative;
+    display: flex;
+    width: 80vw;
+    transform-style: preserve-3d;
+    filter: drop-shadow(0 40px 50px rgb(0 0 0 / 0.55));
+    will-change: transform;
+
+    @include from('md') {
+      width: min(60vw, 980px);
+    }
+  }
+
+  &__part {
+    display: block;
+    height: auto;
+    will-change: transform;
+
+    &--left {
+      width: 7.868%;
+    }
+
+    &--right {
+      width: 10.406%;
+    }
+
+    &--core {
+      position: relative;
+      width: 81.726%;
+      overflow: hidden;
+      mask-image: url('/img/hero/core.webp');
+      mask-size: 100% 100%;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  &__sweep {
+    position: absolute;
+    top: -10%;
+    bottom: -10%;
+    left: -60%;
+    width: 55%;
+    background: linear-gradient(100deg, transparent, rgba($copper, 0.55) 45%, rgba($sand, 0.6) 52%, transparent);
+    mix-blend-mode: overlay;
+    pointer-events: none;
+  }
+
+  &__callout {
+    @include flex(row, center, flex-start, 0.5rem);
+    position: absolute;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid rgba($sand, 0.45);
+    background: rgba($night, 0.8);
+    font-size: clamp(0.62rem, 1.6vw, 0.82rem);
+    font-weight: 600;
+    white-space: nowrap;
+    transform: translateZ(80px);
+
+    b {
+      font-family: $font-mono;
+      color: $copper;
+    }
+
+    &--a {
+      top: -22%;
+      left: 0;
+    }
+
+    &--b {
+      bottom: -20%;
+      left: 20%;
+    }
+
+    &--c {
+      display: none;
+      top: 8%;
+      right: -8%;
+    }
+
+    @include from('md') {
+      &--a {
+        top: -14%;
+        left: -6%;
+      }
+
+      &--b {
+        bottom: -12%;
+        left: 34%;
+      }
+
+      &--c {
+        display: flex;
+      }
+    }
+  }
+
+  &__fins {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    overflow: hidden;
+    background: $night;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.7) hue-rotate(-12deg) brightness(0.8);
+    }
+
+    &::after {
+      position: absolute;
+      inset: 0;
+      content: '';
+      background:
+        linear-gradient(0deg, $night 0%, transparent 55%),
+        linear-gradient(90deg, rgba(#2e6e8f, 0.55), transparent 70%);
+    }
+  }
+
+  &__copy {
+    position: absolute;
+    z-index: 5;
+    right: clamp(1.1rem, 4.5vw, 4.5rem);
+    bottom: calc(1.6rem + env(safe-area-inset-bottom));
+    left: clamp(1.1rem, 4.5vw, 4.5rem);
+    min-height: 40dvh;
+
+    &::before {
+      position: absolute;
+      inset: -3rem calc(clamp(1.1rem, 4.5vw, 4.5rem) * -1) -2rem;
+      z-index: -1;
+      content: '';
+      background: linear-gradient(0deg, $night 30%, rgba($night, 0.7) 70%, transparent);
+    }
+
+    @include from('md') {
+      right: auto;
+      bottom: 9dvh;
+      width: min(44rem, 46vw);
+
+      &::before {
+        display: none;
+      }
+    }
+  }
+
+  &__beat {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    max-width: 40rem;
+  }
+
+  &__kicker {
+    @include eyebrow;
+    margin-bottom: 0.9rem;
+    color: $sand;
+
+    .hero__beat--cold & {
+      color: $ice;
+    }
+  }
+
+  &__title {
+    @include display(clamp(2.6rem, 12vw, 7.2rem));
+
+    @include from('md') {
+      font-size: clamp(3.4rem, 6.4vw, 6.6rem);
+    }
+
+    &--md {
+      font-size: clamp(2.2rem, 9vw, 5.2rem);
+
+      @include from('md') {
+        font-size: clamp(2.8rem, 4.8vw, 5rem);
+      }
+    }
+
+    &--close {
+      @include until('md') {
+        font-size: clamp(1.9rem, 8.5vw, 2.6rem);
+      }
+    }
+  }
+
+  &__mask {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.06em;
+  }
+
+  &__split {
+    display: block;
+  }
+
+  &__hot {
+    color: $copper;
+  }
+
+  &__body {
+    max-width: 34ch;
+    margin-top: 1rem;
+    font-size: clamp(0.98rem, 1.4vw, 1.15rem);
+    color: rgba($alu, 0.78);
+  }
+
+  &__actions {
+    @include flex(row, center, flex-start, 1rem 1.5rem);
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  &__hint {
+    @include flex(row, center, flex-start, 0.6rem);
+    @include mono(0.74rem);
+    color: $mist;
+
+    &-line {
+      position: relative;
+      width: 1px;
+      height: 2.2rem;
+      overflow: hidden;
+      background: $night-3;
+
+      &::after {
+        position: absolute;
+        inset: 0;
+        content: '';
+        background: $copper;
+        animation: drip 1.8s $ease infinite;
+      }
+    }
+  }
+
+  &__stats {
+    @include flex(row, stretch, flex-start, 0.6rem 1.4rem);
+    flex-wrap: wrap;
+    margin: 1.2rem 0 0;
+
+    @include until('md') {
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+    }
+
+    div {
+      flex: 1 1 4.5rem;
+      min-width: 0;
+      padding-top: 0.6rem;
+      border-top: 1px solid rgba($alu, 0.22);
+    }
+
+    dt {
+      @include eyebrow;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: $mist;
+    }
+
+    dd {
+      margin: 0.2rem 0 0;
+      font-size: clamp(1.35rem, 4vw, 2.8rem);
+      font-weight: 800;
+      font-stretch: 115%;
+      line-height: 1;
+      color: $sand;
+    }
+  }
+
+  &__rail {
+    display: none;
+
+    @include from('md') {
+      @include flex(column, flex-start, flex-start, 0.7rem);
+      position: absolute;
+      z-index: 6;
+      right: clamp(1.1rem, 4.5vw, 4.5rem);
+      bottom: 10dvh;
+      margin: 0;
+      padding: 0 0 0 1rem;
+      list-style: none;
+      border-left: 1px solid $night-3;
+      @include eyebrow;
+      font-size: 0.7rem;
+      color: $mist;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        left: -1px;
+        width: 1px;
+        height: 100%;
+        content: '';
+        background: $copper;
+        transform: scaleY(var(--hero-p));
+        transform-origin: top;
+      }
+    }
+  }
+
+  // Movimiento reducido: sin escenario fijo, todo el relato visible.
+  &.is-static {
+    height: auto;
+
+    .hero__stage {
+      position: relative;
+      height: auto;
+      padding: 7rem clamp(1.1rem, 4.5vw, 4.5rem) 4rem;
+    }
+
+    .hero__rig,
+    .hero__copy,
+    .hero__beat {
+      position: relative;
+      inset: auto;
+      width: auto;
+      padding: 0;
+      min-height: 0;
+    }
+
+    .hero__copy {
+      @include flex(column, stretch, flex-start, 3rem);
+      margin-top: 3rem;
+    }
+
+    .hero__fins,
+    .hero__callout,
+    .hero__rail {
+      display: none;
+    }
+  }
+}
+
+// CTA buscador: barrido arena + esquina cortada.
+.cta-finder {
+  @include flex(row, center, flex-start, 0.75rem);
+  position: relative;
+  padding: 1rem 1.4rem 1rem 1.1rem;
+  overflow: hidden;
+  background: $copper;
+  color: $night;
+  font-weight: 800;
+  font-stretch: 110%;
+  clip-path: polygon(0 0, 100% 0, 100% 70%, calc(100% - 14px) 100%, 0 100%);
+  transition: padding 0.4s $ease;
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    content: '';
+    background: $sand;
+    transform: translateX(-101%);
+    transition: transform 0.45s $ease;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover {
+    padding-right: 2.6rem;
+
+    &::after {
+      transform: translateX(0);
+    }
+  }
+}
+
+// CTA catálogo: subrayado que fluye como refrigerante.
+.cta-dive {
+  @include flex(row, center, flex-start, 0.6rem);
+  display: inline-flex;
+  margin-top: 1.2rem;
+  padding: 0.3rem 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, $ice, $copper) 0 100% / 100% 2px no-repeat;
+  transition:
+    background-size 0.4s $ease,
+    gap 0.3s $ease;
+
+  &:hover {
+    gap: 1.1rem;
+    background-size: 40% 2px;
+  }
+}
+
+@keyframes drip {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
