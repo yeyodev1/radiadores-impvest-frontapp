@@ -28,7 +28,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section id="destacados" ref="section" class="rail" aria-labelledby="rail-title">
+  <section v-if="!ready || items.length" id="destacados" ref="section" class="rail" aria-labelledby="rail-title">
     <div class="rail__sticky">
       <header class="rail__head">
         <h2 id="rail-title">Los que más<br />salen esta temporada</h2>

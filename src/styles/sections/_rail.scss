@@ -3,13 +3,17 @@
 // Destacados: en desktop el carril avanza horizontal con el scroll; en celular, swipe.
 .rail {
   position: relative;
-  padding: 5rem 0 3rem;
-  background: linear-gradient(180deg, $night 0, $night-2 30%, $alu-2 30%, $alu 100%);
+  padding: 0 0 3rem;
+  background: $alu;
 
+  // El bloque oscuro es el propio encabezado (crece con el título) y las
+  // tarjetas suben sobre el borde: el corte nunca cae encima del texto.
   &__head {
     @include flex(column, flex-start, flex-start, 1rem);
     @include pad-x;
-    padding-bottom: 2rem;
+    padding-top: 5rem;
+    padding-bottom: 9rem;
+    background: linear-gradient(180deg, $night, $night-2);
     color: $alu;
 
     h2 {
@@ -31,7 +35,7 @@
   &__track {
     @include flex(row, stretch, flex-start, 1rem);
     @include pad-x;
-    margin: 0;
+    margin: -7rem 0 0;
     padding-bottom: 1.5rem;
     overflow-x: auto;
     list-style: none;
@@ -54,6 +58,17 @@
       top: 0;
       height: 100dvh;
       overflow: hidden;
+      background: linear-gradient(180deg, $night 0 46%, $alu 46%);
+    }
+
+    .rail__head {
+      padding-top: 0;
+      padding-bottom: 2rem;
+      background: none;
+    }
+
+    .rail__track {
+      margin-top: 0;
     }
 
     .rail__track {
