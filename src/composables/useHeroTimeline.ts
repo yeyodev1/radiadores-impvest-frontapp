@@ -28,8 +28,8 @@ export function useHeroTimeline(root: Ref<HTMLElement | null>) {
       const shown = 'inset(0% 0% 0% 0%)'
       const spread = mobile ? 1.55 : 2.6
 
-      if (!mobile) gsap.set(q('.hero__rad'), { xPercent: 30 })
-      gsap.from(q('.hero__rad'), { yPercent: 18, rotateX: 22, scale: 0.9, duration: 1.4, ease: 'expo.out' })
+      if (!mobile) gsap.set(q('.hero__rad'), { xPercent: 38, scale: 0.8 })
+      gsap.from(q('.hero__rad'), { yPercent: 18, rotateX: 22, duration: 1.4, ease: 'expo.out' })
       gsap.from(q('[data-beat="0"] .hero__split'), { yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: 0.08, delay: 0.15 })
       gsap.set(q('[data-beat]:not([data-beat="0"])'), { clipPath: hidden, yPercent: 8 })
       gsap.set(q('.hero__callout'), { clipPath: 'inset(0% 100% 0% 0%)' })
