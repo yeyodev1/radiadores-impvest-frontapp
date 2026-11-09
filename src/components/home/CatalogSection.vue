@@ -1,21 +1,34 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 import ProductCard from '@/components/shop/ProductCard.vue'
-import { SEGMENTS, whatsappUrl } from '@/config/site'
+import { CATEGORIES, SEGMENTS, SHOP, whatsappUrl } from '@/config/site'
 import { useCatalog } from '@/composables/useCatalog'
 
-const { query, segment, brand, items, total, page, pages, loading, error, facets, load, reset, more } = useCatalog()
+const { query, segment, brand, category, sale, items, total, page, pages, loading, error, facets, load, reset, more } = useCatalog()
 const brands = computed(() => facets.value?.brands ?? [])
-const filtered = computed(() => Boolean(query.value || brand.value || segment.value !== 'todos'))
+const filtered = computed(() => Boolean(query.value || brand.value || category.value || sale.value || segment.value !== 'todos'))
 const askUrl = computed(() => whatsappUrl(`Hola Impvest, busco radiador para: ${query.value || brand.value || 'mi vehículo'}`))
 
 onMounted(load)
 </script>
 
 <template>
-  <section id="catalogo" class="catalog" aria-labelledby="catalog-title">
+  <section id="tienda" class="catalog" aria-labelledby="catalog-title">
     <div class="finder">
-      <h2 id="catalog-title" class="finder__title">¿Qué vehículo<br />vamos a enfriar?</h2>
+      <div class="finder__head">
+        <h2 id="catalog-title" class="finder__title">{{ SHOP.title }}</h2>
+        <p class="finder__sub">{{ SHOP.subtitle }}</p>
+      </div>
+
+      <div class="cats" role="tablist" aria-label="Categoría de repuesto">
+        <button type="button" role="tab" class="cats__item" :class="{ 'is-active': !category }" :aria-selected="!category" @click="category = null">
+          <i class="fa-solid fa-border-all" aria-hidden="true" /><span>Todo</span>
+        </button>
+        <button v-for="c in CATEGORIES" :key="c.id" type="button" role="tab" class="cats__item" :class="{ 'is-active': category === c.id }" :aria-selected="category === c.id" @click="category = category === c.id ? null : c.id">
+          <i class="fa-solid" :class="c.icon" aria-hidden="true" /><span>{{ c.label }}</span>
+        </button>
+      </div>
+
       <label class="finder__field">
         <span class="sr-only">Busca por marca, modelo o código</span>
         <i class="fa-solid fa-magnifying-glass" aria-hidden="true" />
@@ -38,7 +51,7 @@ onMounted(load)
 
     <div class="catalog__bar">
       <p aria-live="polite">
-        <strong>{{ total }}</strong> {{ total === 1 ? 'radiador' : 'radiadores' }} en línea
+        <strong>{{ total }}</strong> {{ total === 1 ? 'producto' : 'productos' }} {{ sale ? 'en oferta' : 'en línea' }}
         <span class="catalog__note"> de un universo de +1000 en bodega</span>
       </p>
       <button v-if="filtered" type="button" class="catalog__reset" @click="reset">Ver todo</button>
@@ -63,7 +76,7 @@ onMounted(load)
 
     <div v-if="page < pages" class="catalog__more">
       <button type="button" class="checkout-btn" style="width: auto" :disabled="loading" @click="more">
-        <span class="checkout-btn__label">{{ loading ? 'Cargando…' : 'Ver más radiadores' }}</span>
+        <span class="checkout-btn__label">{{ loading ? 'Cargando…' : 'Ver más productos' }}</span>
       </button>
     </div>
   </section>

@@ -4,19 +4,18 @@
 .hero {
   --hero-p: 0;
   position: relative;
-  height: 480dvh;
-  margin-top: -$header-h;
+  height: 320dvh;
   background: $night;
   color: $alu;
 
   @include from('md') {
-    height: 560dvh;
+    height: 380dvh;
   }
 
   &__stage {
     position: sticky;
-    top: 0;
-    height: 100dvh;
+    top: $header-h;
+    height: calc(100dvh - #{$header-h});
     overflow: hidden;
     perspective: 1400px;
   }
@@ -32,13 +31,6 @@
         radial-gradient(40% 45% at 26% 58%, rgba($copper, 0.55), transparent 70%),
         radial-gradient(30% 30% at 70% 30%, rgba($copper-deep, 0.3), transparent 70%);
     }
-
-    &--cold {
-      opacity: 0.25;
-      background:
-        radial-gradient(45% 50% at 72% 50%, rgba($ice, 0.42), transparent 70%),
-        radial-gradient(35% 35% at 25% 25%, rgba(#4d86a3, 0.35), transparent 70%);
-    }
   }
 
   &__grid {
@@ -49,58 +41,6 @@
       linear-gradient(90deg, rgba($alu, 0.05) 1px, transparent 1px);
     background-size: 64px 64px;
     mask-image: radial-gradient(70% 60% at 50% 55%, #000 30%, transparent 80%);
-  }
-
-  &__temp {
-    @include flex(column, flex-end, flex-start, 0.2rem);
-    position: absolute;
-    z-index: 4;
-    top: 5.3rem;
-    right: clamp(1.1rem, 4.5vw, 4.5rem);
-    font-family: $font-mono;
-
-    &-label {
-      @include eyebrow;
-      font-size: 0.64rem;
-      color: $mist;
-    }
-
-    &-value {
-      font-size: 1.9rem;
-      font-weight: 600;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-      color: color-mix(in srgb, $copper clamp(0%, calc((1 - var(--hero-p) * 1.6) * 100%), 100%), $ice);
-
-      sup {
-        margin-left: 0.1em;
-        font-size: 0.42em;
-        vertical-align: 0.9em;
-      }
-
-      @include from('md') {
-        font-size: clamp(2.4rem, 4.5vw, 3.6rem);
-      }
-    }
-
-    &-bar {
-      position: relative;
-      width: 4.5rem;
-      height: 3px;
-      background: $night-3;
-
-      i {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(90deg, $ice, $copper);
-        transform: scaleX(calc(1 - min(var(--hero-p) * 1.5, 0.75)));
-        transform-origin: left;
-      }
-
-      @include from('md') {
-        width: 7rem;
-      }
-    }
   }
 
   &__rig {
@@ -172,10 +112,15 @@
     padding: 0.45rem 0.7rem;
     border: 1px solid rgba($sand, 0.45);
     background: rgba($night, 0.8);
+    max-width: 11rem;
     font-size: clamp(0.62rem, 1.6vw, 0.82rem);
     font-weight: 600;
-    white-space: nowrap;
+    line-height: 1.2;
     transform: translateZ(80px);
+
+    @include from('md') {
+      max-width: 16rem;
+    }
 
     b {
       font-family: $font-mono;
@@ -193,9 +138,8 @@
     }
 
     &--c {
-      display: none;
-      top: 8%;
-      right: -8%;
+      top: -8%;
+      right: 0;
     }
 
     @include from('md') {
@@ -210,32 +154,9 @@
       }
 
       &--c {
-        display: flex;
+        top: 8%;
+        right: -8%;
       }
-    }
-  }
-
-  &__fins {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    overflow: hidden;
-    background: $night;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: saturate(0.7) hue-rotate(-12deg) brightness(0.8);
-    }
-
-    &::after {
-      position: absolute;
-      inset: 0;
-      content: '';
-      background:
-        linear-gradient(0deg, $night 0%, transparent 55%),
-        linear-gradient(90deg, rgba(#2e6e8f, 0.55), transparent 70%);
     }
   }
 
@@ -278,10 +199,6 @@
     @include eyebrow;
     margin-bottom: 0.9rem;
     color: $sand;
-
-    .hero__beat--cold & {
-      color: $ice;
-    }
   }
 
   &__title {
@@ -289,14 +206,6 @@
 
     @include from('md') {
       font-size: clamp(3.4rem, 6.4vw, 6.6rem);
-    }
-
-    &--md {
-      font-size: clamp(2.2rem, 9vw, 5.2rem);
-
-      @include from('md') {
-        font-size: clamp(2.8rem, 4.8vw, 5rem);
-      }
     }
 
     &--close {
@@ -445,47 +354,9 @@
       margin-top: 3rem;
     }
 
-    .hero__fins,
     .hero__callout,
     .hero__rail {
       display: none;
-    }
-  }
-}
-
-// CTA buscador: barrido arena + esquina cortada.
-.cta-finder {
-  @include flex(row, center, flex-start, 0.75rem);
-  position: relative;
-  padding: 1rem 1.4rem 1rem 1.1rem;
-  overflow: hidden;
-  background: $copper;
-  color: $night;
-  font-weight: 800;
-  font-stretch: 110%;
-  clip-path: polygon(0 0, 100% 0, 100% 70%, calc(100% - 14px) 100%, 0 100%);
-  transition: padding 0.4s $ease;
-
-  &::after {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    content: '';
-    background: $sand;
-    transform: translateX(-101%);
-    transition: transform 0.45s $ease;
-  }
-
-  > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  &:hover {
-    padding-right: 2.6rem;
-
-    &::after {
-      transform: translateX(0);
     }
   }
 }

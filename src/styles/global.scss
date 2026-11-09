@@ -1,7 +1,7 @@
 // CSS global: se importa UNA vez desde main.ts.
 @use 'index' as *;
+@use 'sections/header';
 @use 'sections/hero';
-@use 'sections/rail';
 @use 'sections/catalog';
 @use 'sections/cart';
 @use 'sections/admin';

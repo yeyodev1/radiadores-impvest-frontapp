@@ -6,7 +6,7 @@
   padding-top: 4rem;
   padding-bottom: 5rem;
   background: $alu;
-  scroll-margin-top: 4rem;
+  scroll-margin-top: calc(#{$header-h} + 1rem);
 
   &__bar {
     @include flex(row, center, space-between, 0.6rem);
@@ -50,8 +50,18 @@
   background: $night;
   color: $alu;
 
+  &__head {
+    @include flex(column, flex-start, flex-start, 0.6rem);
+    flex: 1 1 100%;
+  }
+
   &__title {
-    @include display(clamp(2.1rem, 7vw, 4.4rem));
+    @include display(clamp(2rem, 6vw, 3.8rem));
+  }
+
+  &__sub {
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    color: $sand;
   }
 
   &__field {
@@ -153,16 +163,64 @@
     flex-flow: row wrap;
     align-items: flex-end;
 
-    &__title {
-      flex: 1 1 40%;
-    }
-
     &__field {
-      flex: 1 1 50%;
+      flex: 1 1 100%;
     }
 
     &__filters {
       flex: 1 1 100%;
+    }
+  }
+}
+
+// Fila de categorías con ícono (como las tiendas de repuestos): scroll horizontal, activa en cobre.
+.cats {
+  @include flex(row, stretch, flex-start, 0.5rem);
+  flex: 1 1 100%;
+  overflow-x: auto;
+  padding-bottom: 0.3rem;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &__item {
+    @include flex(column, center, center, 0.45rem);
+    flex: 0 0 auto;
+    width: 6.6rem;
+    padding: 0.8rem 0.5rem;
+    border: 1px solid $night-3;
+    border-radius: 0.8rem;
+    background: $night-2;
+    color: $alu;
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.15;
+    text-align: center;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      color 0.2s,
+      transform 0.2s $ease;
+
+    i {
+      font-size: 1.4rem;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &.is-active {
+      border-color: $copper;
+      background: $copper;
+      color: $night;
+    }
+
+    @include from('md') {
+      width: 7.6rem;
+      font-size: 0.78rem;
     }
   }
 }
@@ -269,9 +327,33 @@
   }
 
   &__price {
+    @include flex(row, baseline, flex-start, 0.5rem);
     margin-top: 0.3rem;
     @include mono(1.02rem);
     font-weight: 600;
+
+    s {
+      font-size: 0.8rem;
+      color: $ink-2;
+    }
+  }
+
+  &__off {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.7rem;
+    z-index: 1;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.4rem;
+    background: $danger;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  &__off ~ * .pcard__seg,
+  &:has(.pcard__off) .pcard__seg {
+    display: none;
   }
 
   .add-btn {
@@ -500,5 +582,57 @@
 @keyframes float {
   50% {
     transform: translateY(-10px) rotate(-1deg);
+  }
+}
+
+// Marcas en movimiento: contorno que se enciende en cobre.
+.brands {
+  @include flex(column, stretch, flex-start, 0.2rem);
+  padding: 2.5rem 0;
+  overflow: hidden;
+  background: $alu;
+
+  &__track {
+    display: flex;
+    width: max-content;
+    animation: marquee 46s linear infinite;
+
+    > div {
+      display: flex;
+    }
+
+    &--b {
+      animation-direction: reverse;
+      animation-duration: 58s;
+    }
+  }
+
+  &__item {
+    padding: 0 1.6rem;
+    border: 0;
+    background: none;
+    font-size: clamp(2.6rem, 9vw, 6.5rem);
+    font-weight: 800;
+    font-stretch: 125%;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: transparent;
+    -webkit-text-stroke: 1.5px $alu-3;
+    cursor: pointer;
+    transition:
+      color 0.3s,
+      -webkit-text-stroke-color 0.3s;
+
+    &:hover {
+      color: $copper;
+      -webkit-text-stroke-color: $copper;
+    }
+
+    .brands__track--b & {
+      color: $alu-2;
+      -webkit-text-stroke-color: transparent;
+      cursor: default;
+    }
   }
 }

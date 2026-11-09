@@ -17,7 +17,10 @@
 
     nav {
       @include flex(row, center, flex-start, 0.2rem);
+      flex: 1 1 0;
+      min-width: 0;
       overflow-x: auto;
+      scrollbar-width: none;
 
       a {
         padding: 0.5rem 0.8rem;
@@ -37,6 +40,7 @@
 
   &__brand {
     @include flex(row, center, flex-start, 0.5rem);
+    flex: 0 0 auto;
     font-weight: 800;
     font-stretch: 120%;
 
@@ -339,5 +343,32 @@
     font-size: 1.8rem;
     font-weight: 800;
     font-stretch: 112%;
+  }
+}
+
+.a-hint {
+  max-width: 70ch;
+  margin-bottom: 1.2rem;
+  color: $ink-2;
+  font-size: 0.92rem;
+}
+
+// Fila de banner: miniatura ancha, campos al lado, orden con flechas.
+.a-row--banner {
+  align-items: flex-start;
+
+  img {
+    width: 12rem;
+    height: 5.3rem;
+    border-radius: 0.5rem;
+    object-fit: cover;
+  }
+
+  .a-form {
+    gap: 0.6rem;
+  }
+
+  .a-form__field input {
+    padding: 0.5rem 0.7rem;
   }
 }

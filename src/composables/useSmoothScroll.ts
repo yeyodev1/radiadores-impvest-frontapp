@@ -14,7 +14,7 @@ export function useSmoothScroll() {
     ])
     if (cancelled) return
     gsap.registerPlugin(ScrollTrigger)
-    const lenis = new Lenis({ autoRaf: false, lerp: 0.11, anchors: { offset: -72 } })
+    const lenis = new Lenis({ autoRaf: false, lerp: 0.11, anchors: { offset: -120 } })
     lenis.on('scroll', ScrollTrigger.update)
     const raf = (time: number) => lenis.raf(time * 1000)
     gsap.ticker.add(raf)

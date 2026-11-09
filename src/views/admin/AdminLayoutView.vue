@@ -18,6 +18,7 @@ const logout = () => {
         <RouterLink to="/admin">Inicio</RouterLink>
         <RouterLink to="/admin/productos">Productos</RouterLink>
         <RouterLink to="/admin/pedidos">Pedidos</RouterLink>
+        <RouterLink to="/admin/banners">Banners</RouterLink>
         <RouterLink to="/" target="_blank">Ver tienda</RouterLink>
       </nav>
       <button type="button" class="admin__logout" @click="logout">Salir</button>

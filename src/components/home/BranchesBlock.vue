@@ -10,10 +10,10 @@ const current = computed(() => BRANCHES.find((b) => b.id === active.value) ?? BR
   <section id="sucursales" class="branches" aria-labelledby="branches-title">
     <header class="branches__head">
       <h2 id="branches-title">5 sucursales. Una está cerca de ti.</h2>
-      <p>
-        {{ BUSINESS.hours[0].days }} <span class="mono">{{ BUSINESS.hours[0].time }}</span> · {{ BUSINESS.hours[1].days }}
-        <span class="mono">{{ BUSINESS.hours[1].time }}</span>
-      </p>
+      <div class="hours">
+        <h3><i class="fa-regular fa-clock" aria-hidden="true" /> Horario</h3>
+        <p v-for="h in BUSINESS.hours" :key="h.days">{{ h.days }} <span class="mono">{{ h.time }}</span></p>
+      </div>
     </header>
 
     <div class="branches__body">
@@ -21,8 +21,8 @@ const current = computed(() => BRANCHES.find((b) => b.id === active.value) ?? BR
         <li v-for="(b, i) in BRANCHES" :key="b.id">
           <button type="button" class="branch" :class="{ 'is-active': b.id === active }" :aria-pressed="b.id === active" @click="active = b.id">
             <span class="branch__n mono">{{ String(i + 1).padStart(2, '0') }}</span>
-            <span class="branch__name">{{ b.name }}</span>
-            <span class="branch__city mono">{{ b.city }}</span>
+            <span class="branch__name">{{ b.name }}<small>{{ b.city }}</small></span>
+            <span class="branch__phone mono"><i class="fa-solid fa-phone" aria-hidden="true" />{{ b.phone }}</span>
           </button>
         </li>
       </ol>
@@ -32,9 +32,10 @@ const current = computed(() => BRANCHES.find((b) => b.id === active.value) ?? BR
         <h3>{{ current.name }}</h3>
         <p>{{ current.address }}</p>
         <p class="mono branch-card__city">{{ current.city }}, Ecuador</p>
+        <a class="branch-card__phone" :href="`tel:${current.phoneIntl}`"><i class="fa-solid fa-phone" aria-hidden="true" />{{ current.phone }}</a>
         <div class="branch-card__actions">
           <a class="branch-card__route" :href="mapsUrl(current)" target="_blank" rel="noreferrer">Cómo llegar <i class="fa-solid fa-arrow-right" aria-hidden="true" /></a>
-          <a class="branch-card__dial" :href="`tel:${BUSINESS.phoneIntl}`">Llamar</a>
+          <a class="branch-card__dial" :href="`tel:${current.phoneIntl}`">Llamar</a>
         </div>
       </article>
 
@@ -55,19 +56,15 @@ const current = computed(() => BRANCHES.find((b) => b.id === active.value) ?? BR
   padding-top: 5rem;
   padding-bottom: 5rem;
   background: $alu-2;
-  scroll-margin-top: 4rem;
+  scroll-margin-top: calc(#{$header-h} + 1rem);
 
   &__head {
-    @include flex(column, flex-start, flex-start, 0.8rem);
+    @include flex(column, flex-start, flex-start, 1.2rem);
     margin-bottom: 2rem;
 
     h2 {
       @include display(clamp(2.1rem, 6vw, 4rem));
       max-width: 16ch;
-    }
-
-    p {
-      color: $ink-2;
     }
 
     @include from('lg') {
@@ -89,10 +86,36 @@ const current = computed(() => BRANCHES.find((b) => b.id === active.value) ?? BR
   }
 }
 
+.hours {
+  @include flex(column, flex-start, flex-start, 0.15rem);
+  padding: 0.9rem 1.1rem;
+  border-left: 3px solid $copper;
+  background: $alu;
+
+  h3 {
+    @include flex(row, center, flex-start, 0.5rem);
+    margin-bottom: 0.3rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    font-stretch: 112%;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+
+    i {
+      color: $copper-deep;
+    }
+  }
+
+  p {
+    color: $ink-2;
+    font-size: 0.95rem;
+  }
+}
+
 .branch {
-  @include flex(row, baseline, flex-start, 1rem);
+  @include flex(row, center, flex-start, 1rem);
   width: 100%;
-  padding: 1.05rem 0.4rem;
+  padding: 0.9rem 0.4rem;
   border: 0;
   border-bottom: 1px solid $alu-3;
   background: none;
@@ -117,15 +140,29 @@ const current = computed(() => BRANCHES.find((b) => b.id === active.value) ?? BR
   }
 
   &__name {
+    @include flex(column, flex-start, center, 0.1rem);
     flex: 1;
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     font-weight: 800;
     font-stretch: 108%;
+    line-height: 1;
+
+    small {
+      @include mono(0.7rem);
+      font-weight: 500;
+      color: $mist;
+    }
   }
 
-  &__city {
-    font-size: 0.75rem;
-    color: $mist;
+  &__phone {
+    @include flex(row, center, flex-start, 0.4rem);
+    font-size: 0.8rem;
+    white-space: nowrap;
+
+    i {
+      font-size: 0.7rem;
+      color: $copper;
+    }
   }
 }
 
@@ -157,13 +194,24 @@ const current = computed(() => BRANCHES.find((b) => b.id === active.value) ?? BR
     font-size: 0.8rem;
   }
 
+  &__phone {
+    @include flex(row, center, flex-start, 0.6rem);
+    @include mono(1.15rem);
+    font-weight: 600;
+    color: $sand;
+
+    i {
+      font-size: 0.9rem;
+      color: $copper;
+    }
+  }
+
   &__actions {
     @include flex(row, center, flex-start, 0.7rem);
     flex-wrap: wrap;
-    margin-top: 1rem;
+    margin-top: 0.6rem;
   }
 
-  // CTA ruta: la flecha avanza.
   &__route {
     @include flex(row, center, flex-start, 0.6rem);
     padding: 0.85rem 1.2rem;
@@ -181,7 +229,6 @@ const current = computed(() => BRANCHES.find((b) => b.id === active.value) ?? BR
     }
   }
 
-  // CTA llamar: se rellena desde abajo.
   &__dial {
     padding: 0.85rem 1.2rem;
     border: 1px solid $night-3;

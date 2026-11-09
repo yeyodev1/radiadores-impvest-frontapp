@@ -27,7 +27,7 @@ const perks = [
     <article v-if="product" class="pdp">
       <nav class="pdp__crumbs" aria-label="Ruta">
         <RouterLink to="/">Inicio</RouterLink><span aria-hidden="true">/</span>
-        <a href="/#catalogo">Catálogo</a><span aria-hidden="true">/</span>
+        <a href="/#tienda">Tienda</a><span aria-hidden="true">/</span>
         <span>{{ product.code }}</span>
       </nav>
       <div class="pdp__grid">

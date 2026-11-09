@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import AboutBlock from '@/components/home/AboutBlock.vue'
+import BannerCarousel from '@/components/home/BannerCarousel.vue'
 import BranchesBlock from '@/components/home/BranchesBlock.vue'
 import BrandMarquee from '@/components/home/BrandMarquee.vue'
 import CatalogSection from '@/components/home/CatalogSection.vue'
-import FeaturedRail from '@/components/home/FeaturedRail.vue'
 import HeroExploded from '@/components/home/HeroExploded.vue'
+import OffersSection from '@/components/home/OffersSection.vue'
 import ProductLines from '@/components/home/ProductLines.vue'
-import ValueBand from '@/components/home/ValueBand.vue'
+import WhyUsSection from '@/components/home/WhyUsSection.vue'
 import { BRANCHES, BUSINESS, SITE_URL } from '@/config/site'
 import { useSeo } from '@/composables/useSeo'
 
@@ -34,7 +35,7 @@ useSeo(() => ({
     department: BRANCHES.map((b) => ({
       '@type': 'AutoPartsStore',
       name: `${BUSINESS.name} ${b.name}`,
-      telephone: BUSINESS.phoneIntl,
+      telephone: b.phoneIntl,
       address: { '@type': 'PostalAddress', streetAddress: b.address, addressLocality: b.city, addressCountry: 'EC' },
     })),
   },
@@ -43,13 +44,14 @@ useSeo(() => ({
 
 <template>
   <main>
+    <BannerCarousel />
     <HeroExploded />
-    <FeaturedRail />
+    <ProductLines />
     <BrandMarquee />
     <CatalogSection />
-    <ValueBand />
-    <ProductLines />
-    <AboutBlock />
+    <OffersSection />
+    <WhyUsSection />
     <BranchesBlock />
+    <AboutBlock />
   </main>
 </template>

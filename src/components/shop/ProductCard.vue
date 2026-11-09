@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import AddToCartButton from './AddToCartButton.vue'
 import { SEGMENTS } from '@/config/site'
 import type { Product } from '@/types'
-import { formatCents } from '@/utils/format'
+import { discount, formatCents } from '@/utils/format'
 import { productImage } from '@/utils/media'
 
 const props = defineProps<{ product: Product; index?: number }>()
@@ -20,7 +20,11 @@ const segment = computed(() => SEGMENTS.find((s) => s.id === props.product.segme
       </span>
       <span class="pcard__brand">{{ product.brand }}</span>
       <span class="pcard__name">{{ product.model }}</span>
-      <span class="pcard__price">{{ formatCents(product.priceCents) }}</span>
+      <span class="pcard__price">
+        {{ formatCents(product.priceCents) }}
+        <s v-if="product.compareAtCents > product.priceCents">{{ formatCents(product.compareAtCents) }}</s>
+      </span>
+      <span v-if="product.compareAtCents > product.priceCents" class="pcard__off">-{{ discount(product) }}%</span>
     </RouterLink>
     <AddToCartButton :product="product" />
   </li>

@@ -16,13 +16,14 @@ const router = createRouter({
         { path: 'productos', name: 'AdminProducts', component: () => import('@/views/admin/ProductsView.vue') },
         { path: 'productos/:id', name: 'AdminProductEdit', component: () => import('@/views/admin/ProductEditView.vue') },
         { path: 'pedidos', name: 'AdminOrders', component: () => import('@/views/admin/OrdersView.vue') },
+        { path: 'banners', name: 'AdminBanners', component: () => import('@/views/admin/BannersView.vue') },
       ],
     },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/views/NotFoundView.vue') },
   ],
   scrollBehavior(to, _from, saved) {
     if (saved) return saved
-    if (to.hash) return { el: to.hash, top: 72 }
+    if (to.hash) return { el: to.hash, top: 120 }
     return { top: 0 }
   },
 })

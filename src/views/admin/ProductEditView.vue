@@ -25,6 +25,11 @@ const { form, loading, saving, uploading, upload, save, remove } = useProductFor
         <label for="pf-price">Precio (USD)</label>
         <input id="pf-price" v-model="form.price" inputmode="decimal" placeholder="158.70" required />
       </div>
+      <div class="a-form__field">
+        <label for="pf-compare">Precio anterior (oferta)</label>
+        <input id="pf-compare" v-model="form.compareAt" inputmode="decimal" placeholder="Vacío = sin oferta" />
+        <small>Si es mayor al precio, el producto sale tachado en "Ofertas por temporada".</small>
+      </div>
     </div>
     <div class="a-form__field">
       <label for="pf-name">Nombre</label>

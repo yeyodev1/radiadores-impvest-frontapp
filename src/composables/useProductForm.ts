@@ -19,6 +19,7 @@ export function useProductForm(id: string | null) {
     segment: 'autos' as Segment,
     category: 'radiador' as Category,
     price: '',
+    compareAt: '',
     description: '',
     compatibility: '',
     images: [] as ProductImage[],
@@ -34,6 +35,7 @@ export function useProductForm(id: string | null) {
       Object.assign(form, {
         ...p,
         price: (p.priceCents / 100).toFixed(2),
+        compareAt: p.compareAtCents ? (p.compareAtCents / 100).toFixed(2) : '',
         compatibility: p.compatibility.join('\n'),
       })
     } catch (e) {
@@ -57,7 +59,8 @@ export function useProductForm(id: string | null) {
 
   async function save() {
     const price = Number(String(form.price).replace(',', '.'))
-    if (!form.code.trim() || !form.name.trim() || !Number.isFinite(price) || price <= 0) {
+    const compareAt = Number(String(form.compareAt || '0').replace(',', '.'))
+    if (!form.code.trim() || !form.name.trim() || !Number.isFinite(price) || price <= 0 || !Number.isFinite(compareAt) || compareAt < 0) {
       toast.show('Completa código, nombre y un precio válido', 'error')
       return
     }
@@ -70,6 +73,7 @@ export function useProductForm(id: string | null) {
       segment: form.segment,
       category: form.category,
       priceCents: Math.round(price * 100),
+      compareAtCents: Math.round(compareAt * 100),
       description: form.description.trim(),
       compatibility: form.compatibility.split('\n').map((c) => c.trim()).filter(Boolean),
       images: form.images,

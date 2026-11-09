@@ -1,5 +1,5 @@
 import APIBase from './httpBase'
-import type { AdminStats, Order, OrderStatus, Paginated, Product, ProductImage } from '@/types'
+import type { AdminStats, Banner, Order, OrderStatus, Paginated, Product, ProductImage } from '@/types'
 
 export type ProductInput = Partial<Omit<Product, 'id' | 'slug' | 'createdAt' | 'updatedAt'>>
 
@@ -32,6 +32,10 @@ class AdminService extends APIBase {
     const form = new FormData()
     form.append('image', file)
     return (await this.post<ProductImage>('admin/uploads', form)).data
+  }
+
+  async saveBanners(items: Pick<Banner, 'image' | 'href' | 'alt'>[]) {
+    return (await this.put<Banner[]>('admin/banners', { items })).data
   }
 
   async orders(params: Record<string, unknown>) {

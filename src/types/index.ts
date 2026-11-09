@@ -1,5 +1,16 @@
 export type Segment = 'autos' | 'vans-buses' | 'camiones' | 'maquinaria'
-export type Category = 'radiador' | 'intercooler' | 'parte' | 'accesorio'
+export type Category =
+  | 'radiador'
+  | 'intercooler'
+  | 'tanque'
+  | 'herramienta'
+  | 'accesorio'
+  | 'condensador'
+  | 'enfriador-aceite'
+  | 'termostato'
+  | 'refrigerante'
+  | 'inyeccion'
+  | 'calefaccion'
 
 export interface ProductImage {
   url: string
@@ -16,6 +27,7 @@ export interface Product {
   segment: Segment
   category: Category
   priceCents: number
+  compareAtCents: number
   description: string
   compatibility: string[]
   images: ProductImage[]
@@ -24,6 +36,14 @@ export interface Product {
   isActive: boolean
   createdAt: string
   updatedAt: string
+}
+
+export interface Banner {
+  id: string
+  image: ProductImage
+  href: string
+  alt: string
+  order: number
 }
 
 export interface Paginated<T> {

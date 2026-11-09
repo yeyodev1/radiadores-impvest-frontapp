@@ -6,38 +6,55 @@ const years = new Date().getFullYear() - BUSINESS.since
 
 <template>
   <section id="nosotros" class="about" aria-labelledby="about-title">
-    <figure class="about__media">
-      <img src="/img/scenes/fins.webp" alt="Detalle de las aletas de aluminio de un radiador" width="897" height="536" loading="lazy" />
-      <figcaption class="mono">Núcleo de aluminio, vista macro</figcaption>
-    </figure>
-    <div class="about__copy">
-      <h2 id="about-title">{{ years }} años manteniendo <span>la temperatura del país.</span></h2>
-      <p>
-        Impvest abrió sus puertas en 1994 con una meta clara: ser los mayores importadores y distribuidores de radiadores y tanques de
-        radiador de Quito. Hoy somos especialistas en radiadores, intercoolers, accesorios y repuestos automotrices al por mayor y menor,
-        con cinco sucursales en el país.
-      </p>
-      <blockquote>“{{ BUSINESS.claim }}”</blockquote>
+    <div class="about__top">
+      <figure class="about__media">
+        <img src="/img/scenes/sucursales.webp" alt="Fachadas de las sucursales de Radiadores Impvest" width="1200" height="1500" loading="lazy" />
+        <figcaption class="mono">Nuestras sucursales</figcaption>
+      </figure>
+      <div class="about__copy">
+        <h2 id="about-title">{{ years }} años manteniendo <span>la temperatura del país.</span></h2>
+        <p>
+          Impvest abrió sus puertas en 1994 con una meta clara: ser los mayores importadores y distribuidores de radiadores y tanques de
+          radiador de Quito. Hoy somos especialistas en radiadores, intercoolers, accesorios y repuestos automotrices al por mayor y menor,
+          con cinco sucursales en el país.
+        </p>
+        <blockquote>“{{ BUSINESS.claim }}”</blockquote>
+      </div>
+    </div>
+
+    <div class="about__mv">
+      <article class="mv">
+        <h3>Nuestra misión</h3>
+        <p>{{ BUSINESS.mission }}</p>
+      </article>
+      <article class="mv mv--vision">
+        <h3>Nuestra visión</h3>
+        <p>{{ BUSINESS.vision }}</p>
+      </article>
     </div>
   </section>
 </template>
 
 <style scoped lang="scss">
 .about {
-  @include flex(column, stretch, flex-start, 2rem);
+  @include flex(column, stretch, flex-start, 2.5rem);
   @include pad-x;
   padding-top: 5rem;
   padding-bottom: 5rem;
   background: $alu;
-  scroll-margin-top: 4rem;
+  scroll-margin-top: calc(#{$header-h} + 1rem);
 
-  @include from('lg') {
-    flex-direction: row;
-    align-items: center;
-    gap: 4rem;
+  &__top {
+    @include flex(column, stretch, flex-start, 2rem);
 
-    > * {
-      flex: 1 1 0;
+    @include from('lg') {
+      flex-direction: row;
+      align-items: center;
+      gap: 4rem;
+
+      > * {
+        flex: 1 1 0;
+      }
     }
   }
 
@@ -49,8 +66,12 @@ const years = new Date().getFullYear() - BUSINESS.since
 
     img {
       width: 100%;
-      aspect-ratio: 5 / 4;
+      aspect-ratio: 4 / 5;
       object-fit: cover;
+
+      @include from('lg') {
+        aspect-ratio: 4 / 4.4;
+      }
     }
 
     figcaption {
@@ -89,6 +110,42 @@ const years = new Date().getFullYear() - BUSINESS.since
       font-size: 1.3rem;
       font-weight: 700;
       line-height: 1.3;
+    }
+  }
+
+  &__mv {
+    @include flex-cards(280px, 1rem);
+  }
+}
+
+// Misión y visión como los carteles de la tienda: bloque oscuro, título en cobre.
+.mv {
+  @include flex(column, flex-start, flex-start, 0.8rem);
+  @include tab-corners(1.4rem);
+  padding: 2rem;
+  background: $night;
+  color: $alu;
+
+  h3 {
+    @include eyebrow;
+    font-size: 0.8rem;
+    color: $copper;
+  }
+
+  p {
+    font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+    font-weight: 800;
+    font-stretch: 110%;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  &--vision {
+    background: $copper;
+    color: $night;
+
+    h3 {
+      color: $night;
     }
   }
 }
