@@ -14,7 +14,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey))
 
 <template>
   <Transition name="menu">
-    <div v-if="open" class="menu" :style="{ top: `${top}px` }" role="dialog" aria-modal="true" aria-label="Menú principal">
+    <div v-if="open" class="menu" :style="{ top: `${top}px` }" data-lenis-prevent role="dialog" aria-modal="true" aria-label="Menú principal">
       <div class="menu__panel">
         <nav class="menu__nav" aria-label="Principal">
           <a v-for="(l, i) in NAV" :key="l.href" :href="l.href" class="menu__link" :style="{ '--i': i }" @click="emit('close')">

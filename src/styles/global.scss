@@ -16,8 +16,8 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-html.is-locked,
-html.is-locked body {
+// Solo en html: si body también lleva overflow hidden se vuelve contenedor de scroll y el header deja de ser sticky.
+html.is-locked {
   overflow: hidden;
 }
 
