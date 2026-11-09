@@ -13,6 +13,11 @@ const href = whatsappUrl('Hola Impvest, necesito un radiador para mi vehículo.'
 
 <style scoped lang="scss">
 .wa {
+  // Con el menú o el carrito abiertos (html.is-locked) el botón estorba.
+  html.is-locked & {
+    display: none;
+  }
+
   @include flex(row, center, center, 0.6rem);
   position: fixed;
   z-index: 60;

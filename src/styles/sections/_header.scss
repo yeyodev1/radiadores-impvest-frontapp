@@ -13,7 +13,10 @@
   &__bar {
     @include flex(row, center, space-between, 0.75rem);
     @include pad-x;
+    position: relative;
+    z-index: 1;
     height: 50%;
+    background: $night;
 
     &--shop {
       background: $night-2;
@@ -51,38 +54,13 @@
   &__nav {
     display: none;
 
-    .is-menu & {
-      @include flex(column, stretch, flex-start);
-      position: fixed;
-      top: $header-h;
-      right: 0;
-      left: 0;
-      padding: 0.6rem 1.2rem 2rem;
-      background: $night;
-      border-bottom: 3px solid $copper;
-
-      a {
-        padding: 0.8rem 0;
-        border-bottom: 1px solid $night-3;
-        font-size: 1.35rem;
-        font-weight: 700;
-        font-stretch: 115%;
-      }
-    }
-
     @include from('xl') {
-      &,
-      .is-menu & {
+      & {
         @include flex(row, center, flex-start, 0);
-        position: static;
-        padding: 0;
-        background: none;
-        border: 0;
 
         a {
           position: relative;
           padding: 0.5rem 0.6rem;
-          border: 0;
           font-size: 0.82rem;
           font-weight: 600;
           font-stretch: 100%;
